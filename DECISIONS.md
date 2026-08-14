@@ -38,7 +38,7 @@ devuelve un `TransferCommand` con el monto ya convertido a centavos exactos. As�
 consumidor vuelve a parsear el string y nadie puede discrepar sobre cuánto era.
 
 Devuelve **todas** las violaciones, no la primera, para que el formulario muestre todos los
-problemas de una vez en lugar de hacer que el usuario los descubra de a uno.
+problemas de una vez en lugar de hacer que el usuario los descubra uno por uno.
 
 ---
 
@@ -47,12 +47,12 @@ problemas de una vez en lugar de hacer que el usuario los descubra de a uno.
 No hay una respuesta única; hay una respuesta por pantalla, y la diferencia entre Home y
 Nueva Transacción es deliberada.
 
-| Pantalla              | Estrategia                                   | Por qué                                                                                                                                                                                                                                                                                                             |
-| --------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Login**             | Server Shell + Client Component para el form | El texto estático viaja como HTML; solo el formulario (estado, validación, handler) se vuelve JS.                                                                                                                                                                                                                   |
-| **Home**              | **Híbrido**: identidad SSR, dinero CSR       | Quién sos se sabe apenas llega el request (cookie) → saludo sin spinner ni layout shift. El saldo es volátil, per-usuario e incacheable: SSR no aporta caché, solo TTFB. Y hacerlo en cliente es lo que **hace alcanzables los tres estados** (carga, vacío, error) y el botón de reintentar que pide el enunciado. |
-| **Nueva Transacción** | **SSR** de saldo y favoritos                 | Acá los datos no se _miran_, se _usan_: no podés escribir un monto sin saber cuánto tenés. Un spinner antes de poder actuar es peor UX. El trade-off (saldo = snapshot) lo cubre la revalidación del servidor al confirmar.                                                                                         |
-| **Comprobante**       | **SSR** desde la transacción guardada        | Un comprobante que no se puede refrescar, guardar en favoritos ni compartir no es un comprobante. Vive en su propia URL y muestra lo que el servidor registró, no lo que el cliente creyó enviar.                                                                                                                   |
+| Pantalla              | Estrategia                                   | Por qué                                                                                                                                                                                                                                                                                                              |
+| --------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Login**             | Server Shell + Client Component para el form | El texto estático viaja como HTML; solo el formulario (estado, validación, handler) se vuelve JS.                                                                                                                                                                                                                    |
+| **Home**              | **Híbrido**: identidad SSR, dinero CSR       | Quién eres se sabe apenas llega el request (cookie) → saludo sin spinner ni layout shift. El saldo es volátil, per-usuario e incacheable: SSR no aporta caché, solo TTFB. Y hacerlo en cliente es lo que **hace alcanzables los tres estados** (carga, vacío, error) y el botón de reintentar que pide el enunciado. |
+| **Nueva Transacción** | **SSR** de saldo y favoritos                 | Aquí los datos no se _miran_, se _usan_: no puedes escribir un monto sin saber cuánto tienes. Un spinner antes de poder actuar es peor UX. El trade-off (saldo = snapshot) lo cubre la revalidación del servidor al confirmar.                                                                                       |
+| **Comprobante**       | **SSR** desde la transacción guardada        | Un comprobante que no se puede refrescar, guardar en favoritos ni compartir no es un comprobante. Vive en su propia URL y muestra lo que el servidor registró, no lo que el cliente creyó enviar.                                                                                                                    |
 
 Leer la sesión con `cookies()` marca estas rutas como dinámicas, que es exactamente lo
 correcto: una pantalla con el saldo de un usuario jamás debe cachearse estáticamente.
@@ -185,12 +185,12 @@ el cliente no impone deja el spinner girando para siempre.
 ## 6. Idempotencia: por qué el botón “Reintentar” es seguro
 
 Este es el edge case menos obvio del enunciado. Un timeout **no te dice si el servidor
-ejecutó la transferencia o no**. Reintentar ingenuamente puede mandar la plata dos veces.
+ejecutó la transferencia o no**. Reintentar ingenuamente puede mandar el dinero dos veces.
 
 Solución estándar de pagos: el cliente genera una `idempotency-key` por borrador, estable
 entre reintentos del _mismo_ borrador y regenerada apenas cambia el monto o el
 destinatario. El servidor guarda `key → transactionId` y, ante una repetición, devuelve el
-comprobante original en lugar de mover plata otra vez.
+comprobante original en lugar de mover dinero otra vez.
 
 Está testeado en los dos niveles: el reducer mantiene la clave entre `SUBMIT` y `FAIL` pero
 la regenera al editar el monto, y la ruta cobra una sola vez ante dos POST con la misma
@@ -406,7 +406,7 @@ dependencia invita a que alguien importe un valor por accidente y anule el split
 es React + Redux + el runtime de Next, no sus componentes; partir código propio de 3 KB no
 mueve la aguja y encima agrega overhead por chunk.
 
-La costura queda montada y verificada —un test comprueba que ese chunk se pide recién al
+La costura queda montada y verificada —un test comprueba que ese chunk se pide solo al
 llegar al paso 2— y es donde rendiría de verdad en cuanto entre una dependencia pesada: un
 selector de fechas, una librería de gráficos o un escáner de QR.
 
@@ -464,7 +464,7 @@ panel de demo, así que ninguna rama de error es alcanzable solo por suerte.
 - **Doble cobro al reintentar** — resuelto con idempotencia.
 - El saldo cambia entre validar y ejecutar — el store revalida antes de debitar.
 - Guardar el contacto falla después de una transferencia exitosa — se traga el error; la
-  plata ya se movió y eso no puede fallar retroactivamente.
+  dinero ya se movió y eso no puede fallar retroactivamente.
 - Cookie corrupta o falsificada — se trata como “sin sesión”, nunca lanza.
 - **Open redirect** en `?next=` — solo se aceptan rutas del mismo sitio.
 - Carreras al cargar Home: una respuesta lenta que llega después de una rápida no pisa los

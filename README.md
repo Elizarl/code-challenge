@@ -49,7 +49,7 @@ producción.
 | Fondos insuficientes | 10 % | Error descriptivo, **sin** invitación a reintentar            |
 | Error desconocido    | 10 % | Fallback genérico, reintentable                               |
 
-Reintentar unas cuantas veces alcanza para ver los cinco. Si querés ir directo a uno
+Reintentar unas cuantas veces alcanza para ver los cinco. Si quieres ir directo a uno
 concreto sin depender de la suerte, el servidor acepta una cabecera de simulación —el mismo
 gancho que usa la suite E2E, que no forma parte de la interfaz:
 
@@ -252,7 +252,7 @@ Son limitaciones deliberadas de un challenge con datos mockeados, no descuidos:
 3. **Un solo usuario.** Cualquier handle entra a la misma cuenta demo. No hay registro.
 4. **Las cabeceras de simulación existen en producción.** `x-simulate-outcome` y las de
    Home no están protegidas por ningún flag. En una app real irían detrás de un feature
-   flag o restringidas a entornos de test; acá son el gancho que mantiene determinista a la
+   flag o restringidas a entornos de test; aquí son el gancho que mantiene determinista a la
    suite E2E sin ensuciar la interfaz.
 5. **Los tests E2E corren en serie** (`workers: 1`) porque comparten el store en memoria.
 6. **La lista de contactos no está virtualizada** ni paginada. Con cuatro contactos es

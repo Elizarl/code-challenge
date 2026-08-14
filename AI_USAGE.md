@@ -35,7 +35,7 @@ yo revisaba, y en varios puntos la mandé a rehacer cosas.
   no como decisión de cada componente.
 - La **idempotencia** en el reintento. Esto lo propuso la IA y me pareció correcto: un
   timeout no te dice si el servidor ejecutó la transferencia, así que reintentar sin clave
-  puede mandar la plata dos veces.
+  puede mandar el dinero dos veces.
 - La **cobertura de tests**, incluido el test que verifica que las reglas se cumplen
   pegándole a la API sin pasar por la UI.
 
