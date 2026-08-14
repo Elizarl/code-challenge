@@ -1,0 +1,43 @@
+.amount {
+  text-align: center;
+  padding: var(--space-4) 0 var(--space-5);
+}
+
+.amountValue {
+  font-size: clamp(1.875rem, 9vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.amountLabel {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.blocked {
+  margin-top: var(--space-2);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (min-width: 30rem) {
+  .actions {
+    flex-direction: row-reverse;
+  }
+
+  .actions > * {
+    flex: 1;
+  }
+}
+
+.srOnly {
+  composes: srOnly from global;
+}

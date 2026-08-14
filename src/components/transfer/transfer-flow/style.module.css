@@ -1,0 +1,44 @@
+.steps {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  flex-wrap: nowrap;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.dot {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  font-size: 0.75rem;
+}
+
+.dotActive {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.bar {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+@media (max-width: 22rem) {
+  .label {
+    display: none;
+  }
+}

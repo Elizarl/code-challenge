@@ -1,0 +1,99 @@
+.amountLabel {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.amountWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.amountPrefix {
+  position: absolute;
+  left: var(--space-4);
+  font-size: 1.5rem;
+  font-weight: 650;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.amountInput {
+  width: 100%;
+  min-height: 4rem;
+  padding: 0 var(--space-4) 0 2.25rem;
+  font-size: clamp(1.375rem, 6.5vw, 1.75rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.amountInput:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+.amountInvalid,
+.amountInvalid:hover:not(:disabled) {
+  border-color: var(--danger);
+}
+
+.availableRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.fieldError {
+  font-size: 0.8125rem;
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.tab {
+  flex: 1;
+  min-height: 2.25rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.tabActive {
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: var(--shadow-sm);
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.checkbox input {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.2rem;
+  flex: none;
+  accent-color: var(--accent);
+}
