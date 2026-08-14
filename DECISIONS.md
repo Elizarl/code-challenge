@@ -123,16 +123,11 @@ transferencia recibe saldo y contactos por props desde un Server Component y sol
 hidrata al store; no hay un thunk que los vuelva a pedir. Meter en un store algo que el
 servidor ya renderizó es duplicar la fuente de verdad.
 
-**Con más tiempo:** RTK Query en lugar de `createAsyncThunk` + el cliente HTTP propio.
-Daría dedupe, caché e invalidación gratis. No lo hice porque habría que reimplementar la
-traducción de HTTP a la taxonomía de fallos (sección 5), que es justamente la parte que no
-quería aflojar.
-
 ---
 
 ## 4. El dinero es un entero, siempre
 
-`0.1 + 0.2 !== 0.3`. En una app de pagos eso no es una curiosidad: es dinero real
+`0.1 + 0.2 !== 0.3`,es dinero real
 perdiéndose en redondeos, multiplicado por millones de transacciones.
 
 Todo monto es un `Cents` — un entero con **marca nominal** (`Brand<number, 'Cents'>`), de
